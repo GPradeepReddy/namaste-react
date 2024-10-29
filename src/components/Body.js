@@ -18,9 +18,9 @@ const Body = () => {
 
         const data = await res.json();
 
-        setListOfRestaurants(data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        setListOfRestaurants(data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
 
-        setFilteredRestaurants(data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        setFilteredRestaurants(data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
     }
 
     const useFilterRestaurants = (type = 'rating') => {
@@ -47,11 +47,11 @@ const Body = () => {
                 }}>Clear Filters</button>
             </div>
             {
-                filteredRestaurants.length === 0 ? <Shimmer /> :
+                filteredRestaurants?.length === 0 ? <Shimmer /> :
                     (<div className="body-container">
 
                         {
-                            filteredRestaurants.map(res => <RestaurantCard key="res.info.id" resData={res} />)
+                            filteredRestaurants?.map(res => <RestaurantCard key="res.info.id" resData={res} />)
                         }
                     </div >)
             }
