@@ -1,20 +1,26 @@
 
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header.js";
 import Body from "./components/Body.js";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Contact from "./components/Contact.js";
 import RestauranrMenu from "./components/RestauranrMenu.js";
+import userContext from "./utils/userContext.js";
 
 
 const AppLayout = () => {
+
+    const [userName, setUserName] = useState("Pradee Reddy");
+
     return (
-        <div className="container">
-            <Header />
-            <Outlet />
-            {/* JSX Comments */}
-        </div>
+        <userContext.Provider value={{ loggedInUser: userName, setUserName }}>
+            <div className="container">
+                <Header />
+                <Outlet />
+                {/* JSX Comments */}
+            </div>
+        </userContext.Provider>
     )
 }
 
