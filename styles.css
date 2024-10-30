@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -64,14 +68,23 @@
   cursor: pointer;
 }
 
-.filters-container{
+.filters-container {
   display: flex;
   gap: 20px;
   align-items: center;
   margin: 10px 0;
 }
 
-.filter-input{
+.filter-input {
   padding: 12px;
   font-size: 16px;
+}
+
+.open-label {
+  background-color: cornflowerblue;
+  color: #f0f0f0;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 20px;
+  position: absolute;
 }

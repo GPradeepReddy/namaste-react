@@ -1,12 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import resList from "../utils/mockData";
-import RestaurantCard from "./ReasturantCard";
+import RestaurantCard, { OpenLabel } from "./ReasturantCard";
 import Shimmer from "./Shimmer";
+import userContext from "../utils/userContext";
 
 const Body = () => {
+
     const [listOfRestaurants, setListOfRestaurants] = useState([]);
     const [filteredRestaurants, setFilteredRestaurants] = useState([]);
     const [searchText, setSearchText] = useState([]);
+    const RestaurantCardOpen = OpenLabel(RestaurantCard);
+    const { loggedInUser, setUserName } = useContext(userContext);
 
     useEffect(() => {
         fetchData();
@@ -18,9 +22,9 @@ const Body = () => {
 
         const data = await res.json();
 
-        setListOfRestaurants(data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        setListOfRestaurants(data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
 
-        setFilteredRestaurants(data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        setFilteredRestaurants(data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
     }
 
     const useFilterRestaurants = (type = 'rating') => {
@@ -45,13 +49,19 @@ const Body = () => {
                 <button className="filter-button" onClick={() => {
                     setFilteredRestaurants(listOfRestaurants)
                 }}>Clear Filters</button>
+                <div>
+                    <label>User Name: </label>
+                    <input type="text" value={loggedInUser} onChange={(e) => setUserName(e.target.value)} />
+                </div>
             </div>
             {
                 filteredRestaurants?.length === 0 ? <Shimmer /> :
                     (<div className="body-container">
 
                         {
-                            filteredRestaurants?.map(res => <RestaurantCard key="res.info.id" resData={res} />)
+                            filteredRestaurants?.map(res => (
+                                res?.info?.isOpen ? <RestaurantCardOpen resData={res} /> : <RestaurantCard key="res.info.id" resData={res} />
+                            ))
                         }
                     </div >)
             }
