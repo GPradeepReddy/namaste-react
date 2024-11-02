@@ -1,10 +1,17 @@
 import React from 'react'
+import { useDispatch } from 'react-redux';
+import { addItem } from '../utils/cartSlice';
 
 const RestaurantCategory = ({ data, showDes, setShowIndex }) => {
     const { name, description, price } = data?.card?.info;
+    const dispatch = useDispatch();
 
     const handleShowDes = () => {
         setShowIndex();
+    }
+
+    const handleAddItem = (item) => {
+        dispatch(addItem(item))
     }
 
     return (
@@ -17,9 +24,12 @@ const RestaurantCategory = ({ data, showDes, setShowIndex }) => {
                 
             </div>
             {
-                showDes && <div className='p-6 text-teal-400 text-xl'>
-                    {description}
-                </div>
+                showDes && (
+                    <div className='p-6 text-teal-400 text-xl flex justify-between'>
+                        <span>{description}</span>
+                        <span onClick={() => handleAddItem(data?.card?.info)}>➕</span>
+                    </div>
+                )
             }
         </div>
     )
